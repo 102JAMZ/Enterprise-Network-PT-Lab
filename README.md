@@ -10,3 +10,5 @@ For the time being I think this covers all the fundamentals though, dynamic and 
 
 Password is "ghost" for all network devices in the lab.
 It's just a network lab so I couldn't be bothered to make a password that I can't type less than 1 swift motion.
+
+Included here are some of the bigger running configs and the packet tracer file.
