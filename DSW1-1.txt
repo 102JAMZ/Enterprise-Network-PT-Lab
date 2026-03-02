@@ -1,0 +1,227 @@
+DSW1-1#sh run
+Building configuration...
+
+Current configuration : 3873 bytes
+!
+version 16.3.2
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname DSW1-1
+!
+!
+enable secret 5 $1$mERr$rBqVY6E26EdKnSt5KbsKa.
+!
+!
+!
+!
+!
+!
+no ip cef
+ip routing
+!
+no ipv6 cef
+!
+!
+!
+username ghost secret 5 $1$mERr$rBqVY6E26EdKnSt5KbsKa.
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain-lookup
+ip domain-name pawnshop.ghst
+!
+!
+spanning-tree mode rapid-pvst
+spanning-tree vlan 10,20,30,40,80 priority 0
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 1.1.1.1 255.255.255.255
+ ip ospf 1 area 0
+!
+interface GigabitEthernet1/0/1
+ switchport trunk allowed vlan 10,20,30,40,50,80
+ switchport mode trunk
+ switchport nonegotiate
+!
+interface GigabitEthernet1/0/2
+ switchport trunk allowed vlan 10,20,30,40,50,80
+ switchport mode trunk
+ switchport nonegotiate
+!
+interface GigabitEthernet1/0/3
+!
+interface GigabitEthernet1/0/4
+!
+interface GigabitEthernet1/0/5
+!
+interface GigabitEthernet1/0/6
+!
+interface GigabitEthernet1/0/7
+!
+interface GigabitEthernet1/0/8
+!
+interface GigabitEthernet1/0/9
+!
+interface GigabitEthernet1/0/10
+!
+interface GigabitEthernet1/0/11
+!
+interface GigabitEthernet1/0/12
+!
+interface GigabitEthernet1/0/13
+!
+interface GigabitEthernet1/0/14
+!
+interface GigabitEthernet1/0/15
+!
+interface GigabitEthernet1/0/16
+!
+interface GigabitEthernet1/0/17
+!
+interface GigabitEthernet1/0/18
+!
+interface GigabitEthernet1/0/19
+!
+interface GigabitEthernet1/0/20
+!
+interface GigabitEthernet1/0/21
+!
+interface GigabitEthernet1/0/22
+!
+interface GigabitEthernet1/0/23
+!
+interface GigabitEthernet1/0/24
+!
+interface GigabitEthernet1/1/1
+!
+interface GigabitEthernet1/1/2
+ no switchport
+ ip address 10.1.90.1 255.255.255.0
+ ip ospf 1 area 0
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet1/1/3
+ no switchport
+ ip address 10.105.0.2 255.255.255.252
+ ip ospf 1 area 0
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet1/1/4
+ no switchport
+ ip address 10.100.0.2 255.255.255.0
+ duplex auto
+ speed auto
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+interface Vlan10
+ mac-address 00e0.8f95.0501
+ ip address 10.1.10.1 255.255.255.0
+ standby 10 ip 10.1.10.254
+ standby 10 priority 95
+ standby 10 preempt
+ standby 10 track GigabitEthernet1/1/3
+ standby 0 preempt
+ standby 0 track GigabitEthernet1/1/3
+!
+interface Vlan20
+ mac-address 00e0.8f95.0502
+ ip address 10.1.20.1 255.255.255.0
+ standby 20 ip 10.1.20.254
+ standby 20 preempt
+ standby 20 track GigabitEthernet1/1/3
+ standby 0 preempt
+!
+interface Vlan30
+ mac-address 00e0.8f95.0503
+ ip address 10.1.30.1 255.255.255.0
+ standby 30 ip 10.1.30.254
+ standby 30 preempt
+ standby 30 track GigabitEthernet1/1/3
+ standby 0 preempt
+!
+interface Vlan40
+ mac-address 00e0.8f95.0504
+ ip address 10.1.40.1 255.255.255.0
+ standby 40 ip 10.1.40.254
+ standby 40 preempt
+ standby 40 track GigabitEthernet1/1/3
+ standby 0 preempt
+!
+interface Vlan50
+ mac-address 00e0.8f95.0505
+ ip address 10.1.50.252 255.255.255.0
+ ip helper-address 10.100.0.1
+ standby 50 ip 10.1.50.254
+ standby 50 preempt
+ standby 50 track GigabitEthernet1/1/3
+ standby 0 preempt
+!
+interface Vlan80
+ mac-address 00e0.8f95.0506
+ ip address 10.1.80.1 255.255.255.0
+ standby 80 ip 10.1.80.254
+ standby 80 preempt
+ standby 80 track GigabitEthernet1/1/3
+ standby 0 preempt
+!
+router ospf 1
+ log-adjacency-changes
+ network 10.100.0.0 0.0.0.255 area 0
+ network 10.1.10.0 0.0.0.255 area 0
+ network 10.1.20.0 0.0.0.255 area 0
+ network 10.1.30.0 0.0.0.255 area 0
+ network 10.1.40.0 0.0.0.255 area 0
+ network 10.1.50.0 0.0.0.255 area 0
+ network 10.1.80.0 0.0.0.255 area 0
+!
+ip classless
+ip route 203.0.113.0 255.255.255.240 10.105.0.1 
+ip route 203.0.113.1 255.255.255.255 10.105.0.1 
+!
+ip flow-export version 9
+!
+!
+!
+!
+!
+!
+!
+line con 0
+ exec-timeout 0 0
+ logging synchronous
+ login local
+!
+line aux 0
+!
+line vty 0 4
+ exec-timeout 0 0
+ logging synchronous
+ login local
+line vty 5 15
+ exec-timeout 0 0
+ logging synchronous
+ login local
+!
+!
+!
+!
+end

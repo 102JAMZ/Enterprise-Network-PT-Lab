@@ -1,0 +1,126 @@
+ASBR1#sh run
+Building configuration...
+
+Current configuration : 1924 bytes
+!
+version 15.4
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname ASBR1
+!
+!
+!
+enable secret 5 $1$mERr$rBqVY6E26EdKnSt5KbsKa.
+!
+!
+!
+!
+!
+!
+no ip cef
+no ipv6 cef
+!
+!
+!
+username ghost secret 5 $1$mERr$rBqVY6E26EdKnSt5KbsKa.
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain-lookup
+ip domain-name pawnshop.ghst
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 11.11.11.11 255.255.255.255
+ ip ospf 1 area 0
+!
+interface GigabitEthernet0/0/0
+ ip address 10.105.1.1 255.255.255.252
+ ip ospf 1 area 0
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/0/1
+ ip address 10.105.0.1 255.255.255.252
+ ip ospf 1 area 0
+ ip nat inside
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/0/2
+ ip address 10.200.0.1 255.255.255.252
+ ip ospf 1 area 0
+ ip nat inside
+!
+interface Serial0/1/0
+ ip address 203.0.113.2 255.255.255.240
+ ip access-group 10 out
+ ip nat outside
+!
+interface Serial0/1/1
+ no ip address
+ clock rate 2000000
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+router ospf 1
+ log-adjacency-changes
+ default-information originate
+!
+ip nat inside source list 50 interface Serial0/1/0 overload
+ip nat inside source list 60 interface Serial0/1/0 overload
+ip classless
+ip route 0.0.0.0 0.0.0.0 203.0.113.1 
+!
+ip flow-export version 9
+!
+!
+access-list 10 deny 10.0.0.0 0.255.255.255
+access-list 10 deny 172.16.0.0 0.15.255.255
+access-list 10 deny 192.168.0.0 0.0.255.255
+access-list 10 permit 10.105.0.0 0.0.0.3
+access-list 20 deny 172.16.0.0 0.15.255.255
+access-list 30 deny 192.168.0.0 0.0.255.255
+access-list 40 permit 203.0.113.0 0.0.0.15
+access-list 50 permit 0.0.0.0 255.255.255.0
+access-list 60 permit 10.105.0.0 0.0.0.3
+!
+!
+!
+!
+!
+line con 0
+ exec-timeout 0 0
+ logging synchronous
+ login local
+!
+line aux 0
+!
+line vty 0 4
+ exec-timeout 0 0
+ logging synchronous
+ login local
+line vty 5 15
+ exec-timeout 0 0
+ logging synchronous
+ login local
+!
+!
+!
+end

@@ -1,0 +1,107 @@
+EXR1#sh run
+Building configuration...
+
+Current configuration : 1162 bytes
+!
+version 15.4
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname EXR1
+!
+!
+!
+enable secret 5 $1$mERr$rBqVY6E26EdKnSt5KbsKa.
+!
+!
+!
+!
+!
+!
+no ip cef
+no ipv6 cef
+!
+!
+!
+username ghost secret 5 $1$mERr$rBqVY6E26EdKnSt5KbsKa.
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain-lookup
+ip domain-name pawnshop.data
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface GigabitEthernet0/0/0
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface GigabitEthernet0/0/1
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface GigabitEthernet0/0/2
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface Serial0/1/0
+ ip address 203.0.113.1 255.255.255.240
+ clock rate 2000000
+!
+interface Serial0/1/1
+ no ip address
+ clock rate 2000000
+ shutdown
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+ip classless
+ip route 1.1.1.1 255.255.255.255 203.0.113.2 
+!
+ip flow-export version 9
+!
+!
+!
+!
+!
+!
+!
+line con 0
+ exec-timeout 0 0
+ logging synchronous
+ login local
+!
+line aux 0
+!
+line vty 0 4
+ exec-timeout 0 0
+ logging synchronous
+ login local
+line vty 5 15
+ exec-timeout 0 0
+ logging synchronous
+ login local
+!
+!
+!
+end
